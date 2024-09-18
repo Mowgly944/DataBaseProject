@@ -26,6 +26,28 @@ In this documentation, we will explore the structure of our database, examining 
 
 ---
 
+
+![Capture d’écran 2024-09-16 194653](https://github.com/user-attachments/assets/0f371dd6-32b2-46a3-840b-ceb1450504b8)
+
+---
+
+## Installation of PostgreSQL and LibreOffice Base
+
+```bash
+sudo apt update
+sudo apt install libreoffice-base libreoffice-sdbc-postgresql postgresql
+```
+## To create a command-line database
+
+```sql
+CREATE DATABASE nameDatabase;
+```
+## Connect postgreSQL to LibreOffice Base
+
+```sql
+CREATE DATABASE nameDatabase;
+```
+
 ## Database Structure
 
 ### Customers who purchase products on the site:
@@ -119,8 +141,6 @@ In this documentation, we will explore the structure of our database, examining 
 
 
 
-
-
 ---
 
 ## SQL Code
@@ -148,6 +168,8 @@ CREATE TABLE Customers (
 - **VARCHAR(50)** and **VARCHAR(100)**: Specifies the maximum string length for each column. **NOT NULL** indicates that these columns cannot be empty.
 - **UNIQUE**: Constraint that ensures the email address is unique for each customer.
 
+---
+### Creating the `Suppliers` Table :
 
 
 ```sql
@@ -165,6 +187,9 @@ CREATE TABLE Suppliers (
 ```
 The structure of this table is similar to that of the Clients table
 
+---
+### Creating the `Categories` Table :
+
 ```sql
 CREATE TABLE Categories (
     CategoryID SERIAL PRIMARY KEY,
@@ -173,6 +198,9 @@ CREATE TABLE Categories (
 );
 ```
 TEXT: type of data that allows to store texts of variable length
+
+---
+### Creating the `Products` Table :
 
 ```sql
 CREATE TABLE Products (
@@ -187,6 +215,9 @@ CREATE TABLE Products (
 ```
 DECIMAL(10, 2): Data type that allows to store decimal numbers with an accuracy of 10 digits and 2 digits after the comma
 REFERENCES: constraint that ensures the SupplierID or CategoryID column exists in the Suppliers or Categories table, respectively
+
+---
+### Creating the `Orders` Table :
 
 
 ```sql
@@ -206,13 +237,14 @@ The remaining tables are of the same structure as the others.
 
 Here is an example of data insertion, it’s always the same operation in this case so I won’t do all :
 
+### Creating the `Customers` Table :
 
 ```sql
 INSERT INTO Customers (FirstName, LastName, Email, Phone, Address, City, PostalCode, Country)
 VALUES ('Alice', 'Dupont', 'alice.dupont@example.com', '0123456789', '10 Rue de Paris', 'Paris', '75001', 'France'),
        ('Bob', 'Martin', 'bob.martin@example.com', '0987654321', '22 Avenue des Champs', 'Lyon', '69002', 'France');
 ```
-
+---
 
 ## Five Important SQL Queries
 
@@ -223,14 +255,14 @@ VALUES ('Alice', 'Dupont', 'alice.dupont@example.com', '0123456789', '10 Rue de 
    JOIN Customers c ON o.CustomerID = c.CustomerID
    WHERE c.Email = 'alice.dupont@example.com';
     ```
-
+---
 ### List products with their suppliers
 ```sql
 SELECT p.ProductName, s.SupplierName, p.Price, p.StockQuantity
 FROM Products p
 JOIN Suppliers s ON p.SupplierID = s.SupplierID;
 ```
-
+---
 ### View order details with products and quantities
 ```sql
 SELECT o.OrderID, p.ProductName, od.Quantity, od.Price
@@ -239,13 +271,14 @@ JOIN Products p ON od.ProductID = p.ProductID
 JOIN Orders o ON od.OrderID = o.OrderID
 WHERE o.OrderID = 1;
 ```
+---
 ### List products from a specific category
 ```sql
 SELECT ProductName, Price, StockQuantity
 FROM Products
 WHERE CategoryID = (SELECT CategoryID FROM Categories WHERE CategoryName = 'Fruits');
 ```
-
+---
 ### Collect customers who have placed orders over €5
 ```sql
 SELECT c.FirstName, c.LastName, o.TotalAmount
