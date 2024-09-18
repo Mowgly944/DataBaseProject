@@ -109,6 +109,15 @@ In this documentation, we will explore the structure of our database, examining 
 - A product can be part of many orders, and an order can have many products (many products, many orders): **Products -> OrderDetails -> Orders (ProductID, OrderID)**
 - A supplier can provide products to many categories, and a category can have products from many suppliers (many suppliers, many categories): **Suppliers -> Products -> Categories (SupplierID, CategoryID)**
 
+
+
+
+
+
+
+
+
+
 ---
 
 ## SQL Code
@@ -128,8 +137,15 @@ CREATE TABLE Customers (
     PostalCode VARCHAR(10) NOT NULL,
     Country VARCHAR(50) NOT NULL
 );
+```
 
-### Creating the `Suppliers` Table:
+- **CREATE TABLE**: Instruction to create a new table.
+- **Customers**: Name of the table.
+- **CustomerID SERIAL PRIMARY KEY**: Column that stores each customer’s unique identifier (SERIAL is a data type that automatically generates a sequential number for each new entry).
+- **VARCHAR(50)** and **VARCHAR(100)**: Specifies the maximum string length for each column. **NOT NULL** indicates that these columns cannot be empty.
+- **UNIQUE**: Constraint that ensures the email address is unique for each customer.
+
+
 
 ```sql
 CREATE TABLE Suppliers (
@@ -143,6 +159,61 @@ CREATE TABLE Suppliers (
     PostalCode VARCHAR(10) NOT NULL,
     Country VARCHAR(50) NOT NULL
 );
+```
+The structure of this table is similar to that of the Clients table
+
+```sql
+CREATE TABLE Categories (
+    CategoryID SERIAL PRIMARY KEY,
+    CategoryName VARCHAR(100) NOT NULL,
+    Description TEXT
+);
+```
+TEXT: type of data that allows to store texts of variable length
+
+```sql
+CREATE TABLE Products (
+    ProductID SERIAL PRIMARY KEY,
+    ProductName VARCHAR(200) NOT NULL,
+    Description TEXT,
+    Price DECIMAL(10, 2) NOT NULL,
+    StockQuantity INT NOT NULL,
+    SupplierID INT REFERENCES Suppliers(SupplierID) NOT NULL,
+    CategoryID INT REFERENCES Categories(CategoryID) NOT NULL
+);
+```
+DECIMAL(10, 2): Data type that allows to store decimal numbers with an accuracy of 10 digits and 2 digits after the comma
+REFERENCES: constraint that ensures the SupplierID or CategoryID column exists in the Suppliers or Categories table, respectively
+
+
+```sql
+CREATE TABLE Orders (
+    OrderID SERIAL PRIMARY KEY,
+    OrderDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    CustomerID INT REFERENCES Customers(CustomerID) NOT NULL,
+    TotalAmount DECIMAL(10, 2) NOT NULL
+);
+```
+TIMESTAMP: type of data that allows to store dates and times
+DEFAULT CURRENT_TIMESTAMP: The default value is the current date and time
+
+The remaining tables are of the same structure as the others.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
