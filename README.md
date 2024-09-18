@@ -13,7 +13,6 @@
 - [Database Structure](#database-structure)
 - [Relationships](#relationships)
 - [SQL Code](#sql-code)
-- [Entity-Relationship Diagram](#entity-relationship-diagram)
 
 ---
 
@@ -96,6 +95,7 @@ In this documentation, we will explore the structure of our database, examining 
 
 ---
 
+
 ## Relationships
 
 ### One-to-Many (1:N) Relationships:
@@ -112,6 +112,7 @@ In this documentation, we will explore the structure of our database, examining 
 
 
 
+![Capture d’écran 2024-09-16 194653](https://github.com/user-attachments/assets/0f371dd6-32b2-46a3-840b-ceb1450504b8)
 
 
 
@@ -198,6 +199,72 @@ TIMESTAMP: type of data that allows to store dates and times
 DEFAULT CURRENT_TIMESTAMP: The default value is the current date and time
 
 The remaining tables are of the same structure as the others.
+
+---
+
+Here is an example of data insertion, it’s always the same operation in this case so I won’t do all :
+
+
+```sql
+INSERT INTO Customers (FirstName, LastName, Email, Phone, Address, City, PostalCode, Country)
+VALUES ('Alice', 'Dupont', 'alice.dupont@example.com', '0123456789', '10 Rue de Paris', 'Paris', '75001', 'France'),
+       ('Bob', 'Martin', 'bob.martin@example.com', '0987654321', '22 Avenue des Champs', 'Lyon', '69002', 'France');
+```
+
+
+## Five Important SQL Queries
+
+1. **Retrieve orders placed by a specific customer**
+   ```sql
+   SELECT o.OrderID, o.OrderDate, o.TotalAmount
+   FROM Orders o
+   JOIN Customers c ON o.CustomerID = c.CustomerID
+   WHERE c.Email = 'alice.dupont@example.com';
+    ```
+
+### List products with their suppliers
+```sql
+SELECT p.ProductName, s.SupplierName, p.Price, p.StockQuantity
+FROM Products p
+JOIN Suppliers s ON p.SupplierID = s.SupplierID;
+```
+
+### View order details with products and quantities
+```sql
+SELECT o.OrderID, p.ProductName, od.Quantity, od.Price
+FROM OrderDetails od
+JOIN Products p ON od.ProductID = p.ProductID
+JOIN Orders o ON od.OrderID = o.OrderID
+WHERE o.OrderID = 1;
+```
+### List products from a specific category
+```sql
+SELECT ProductName, Price, StockQuantity
+FROM Products
+WHERE CategoryID = (SELECT CategoryID FROM Categories WHERE CategoryName = 'Fruits');
+```
+
+### Collect customers who have placed orders over €5
+```sql
+SELECT c.FirstName, c.LastName, o.TotalAmount
+FROM Customers c
+JOIN Orders o ON c.CustomerID = o.CustomerID
+WHERE o.TotalAmount > 5;
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
