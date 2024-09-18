@@ -1,4 +1,6 @@
-# Final Project
+# Final Project 
+
+![sqlogo](https://github.com/user-attachments/assets/360f21a4-c9de-4cf5-a22d-63137abc1b5d)
 
 ## Documentation of the Database
 
@@ -252,7 +254,9 @@ JOIN Orders o ON c.CustomerID = o.CustomerID
 WHERE o.TotalAmount > 5;
 ```
 
+---
 
+Thank you for taking the time to explore this online supermarket database project. We covered the database structure, relationships between different entities, as well as the SQL queries essential to interacting with data.Thank you again for your interest! 🙂
 
 
 
