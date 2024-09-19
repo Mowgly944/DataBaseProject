@@ -250,6 +250,11 @@ VALUES ('Alice', 'Dupont', 'alice.dupont@example.com', '0123456789', '10 Rue de 
 ```
 ---
 
+![Payments](https://github.com/user-attachments/assets/080dd387-14f0-400c-b88b-98835ef832f9)
+
+
+
+---
 ## Five Important SQL Queries
 
 1. **Retrieve orders placed by a specific customer**
