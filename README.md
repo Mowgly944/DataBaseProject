@@ -168,6 +168,10 @@ CREATE TABLE Customers (
 - **VARCHAR(50)** and **VARCHAR(100)**: Specifies the maximum string length for each column. **NOT NULL** indicates that these columns cannot be empty.
 - **UNIQUE**: Constraint that ensures the email address is unique for each customer.
 
+![Customers](https://github.com/user-attachments/assets/c4f7424f-258d-4fac-afbe-3e44896c85b9)
+
+
+
 ---
 ### Creating the `Suppliers` Table :
 
